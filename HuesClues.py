@@ -21,14 +21,15 @@ class LoadWindow(QWidget):
         super(LoadWindow, self).__init__(parent)
 
         self.colorcanvas = QLabel()
+        self.color_dim = 1000
         colorwheel = QPixmap(r"C:\Users\graha\Desktop\Code\Python\hues_clues\colorwheel.png")
-        colorwheel = colorwheel.scaled(1000, 750, QtCore.Qt.KeepAspectRatio)
+        colorwheel = colorwheel.scaled(self.color_dim, self.color_dim, QtCore.Qt.KeepAspectRatio)
         self.colorcanvas.setAlignment(QtCore.Qt.AlignHCenter)
         self.colorcanvas.setPixmap(colorwheel)
 
         self.scorecanvas = QLabel()
         score = QPixmap(r"C:\Users\graha\Desktop\Code\Python\hues_clues\PlaceHolder.png")
-        score = score.scaled(500, 750, QtCore.Qt.KeepAspectRatio)
+        score = score.scaled(750, 750, QtCore.Qt.KeepAspectRatio)
         self.scorecanvas.setAlignment(QtCore.Qt.AlignVCenter)
         self.scorecanvas.setPixmap(score)
         
@@ -37,23 +38,31 @@ class LoadWindow(QWidget):
         cwidg.addWidget(self.scorecanvas)
 
         self.button1 = QPushButton('Player 1')
+        self.button1.setFont(QFont('Times', 14))
         self.p1text = QLineEdit('Graham')
+        self.p1text.setFont(QFont('Times', 14))
         self.button1.setCheckable(True)
         self.button1.clicked.connect(self.switch_player)
 
         self.button2 = QPushButton('Player 2')        
+        self.button2.setFont(QFont('Times', 14))
         self.button2.clicked.connect(self.switch_player)
         self.p2text = QLineEdit('Cooper')
+        self.p2text.setFont(QFont('Times', 14))
         self.button2.setCheckable(True)
 
         self.button3 = QPushButton('Player 3')
+        self.button3.setFont(QFont('Times', 14))
         self.button3.clicked.connect(self.switch_player)
         self.p3text = QLineEdit('Mary')
+        self.p3text.setFont(QFont('Times', 14))
         self.button3.setCheckable(True)
         
         self.button4 = QPushButton('Player 4')
+        self.button4.setFont(QFont('Times', 14))
         self.button4.clicked.connect(self.switch_player)
         self.p4text = QLineEdit('Fred')
+        self.p4text.setFont(QFont('Times', 14))
         self.button4.setCheckable(True)
         self.last_selected = None
 
@@ -79,11 +88,14 @@ class LoadWindow(QWidget):
         communicate.addWidget(self.comm)
 
         self.answer_btn = QPushButton('Show Answer')
+        self.answer_btn.setFont(QFont('Times', 14))
         self.answer_btn.clicked.connect(self.show_answer)
         self.start_btn = QPushButton('Next Round')
+        self.start_btn.setFont(QFont('Times', 14))
         self.start_btn.clicked.connect(self.next_round)
         self.start_btn.setDisabled(True)
         self.restart_btn = QPushButton('Play Again')
+        self.restart_btn.setFont(QFont('Times', 14))
         self.restart_btn.clicked.connect(self.restart)
         example = QHBoxLayout()
         example.addWidget(self.start_btn)
@@ -94,7 +106,7 @@ class LoadWindow(QWidget):
         vbox.addLayout(players)
         vbox.addLayout(cwidg)
         vbox.addLayout(communicate)
-        # vbox.addLayout(scorewidg)
+
         vbox.addLayout(example)
 
         self.setLayout(vbox)
@@ -172,8 +184,9 @@ class LoadWindow(QWidget):
 
     def next_round(self):
         self.player_reset()
+        self.turn_log = {}
         colorwheel = QPixmap(r"C:\Users\graha\Desktop\Code\Python\hues_clues\colorwheel.png")
-        colorwheel = colorwheel.scaled(1000, 750, QtCore.Qt.KeepAspectRatio)
+        colorwheel = colorwheel.scaled(self.color_dim, self.color_dim, QtCore.Qt.KeepAspectRatio)
         self.colorcanvas.setAlignment(QtCore.Qt.AlignHCenter)
         self.colorcanvas.setPixmap(colorwheel)
         self.pull_color()
@@ -256,7 +269,7 @@ class LoadWindow(QWidget):
         self.colorcanvas.setPixmap(colorwheel)
 
         score = QPixmap(r"C:\Users\graha\Desktop\Code\Python\hues_clues\PlaceHolder.png")
-        score = score.scaled(500, 750, QtCore.Qt.KeepAspectRatio)
+        score = score.scaled(750, 750, QtCore.Qt.KeepAspectRatio)
         self.scorecanvas.setAlignment(QtCore.Qt.AlignVCenter)
         self.scorecanvas.setPixmap(score)
         self.pull_color()
@@ -264,22 +277,22 @@ class LoadWindow(QWidget):
     def get_score(self):
         players = list(self.scores.keys())
         vals = list(self.scores.values())
-        colors = ['#4680c7' if s < 9 else '#d12c2c' for s in vals]
+        colors = ['#4680c7' if s <= 9 else '#d12c2c' for s in vals]
         plt.barh(players, vals, color=colors)
         plt.yticks(fontsize=20)
         plt.xticks(fontsize=20)
         plt.vlines(10, -1, 5, linestyle='--', color='k')
         plt.ylim(-0.5, len(players)-0.5)
-        plt.savefig('Scores.png', bbox_inches='tight')
+        plt.savefig('Scores.png', bbox_inches='tight', dpi=125)
         self.scorecanvas.setPixmap(QPixmap('Scores.png'))
 
     def show_answer(self):
         l = self.hex_coords(self.turn_color)
-        angle, vector, coord = self.vectorize(l)
+        _, _, coord = self.vectorize(l)
 
         x, y = coord[0], coord[1]
-        x = 375 + (375 * x)
-        y = 375 + (375 * -y)
+        x = self.color_dim/2 + (self.color_dim/2 * x)
+        y = self.color_dim/2 + (self.color_dim/2 * -y)
 
         x, y = x//1, y//1
         self.turn_answer = (x,y)
