@@ -1,6 +1,6 @@
-# HuesCluesDupe
+# HuesCuesDupe
 
-<img src="https://github.com/grahamdelafield/HuesCluesDupe/blob/master/colorwheel.png" align="right"
+<img src="https://github.com/grahamdelafield/HuesCuesDupe/blob/master/colorwheel.png" align="right"
      alt="Colorwheel" width="200" height="200">
 
 This code emulates a simple version of the board game Hues and Cues (https://boardgamegeek.com/boardgame/302520/hues-and-cues). This is done purely for exercise; I own no intellectual property or rights to the board game.
@@ -21,12 +21,12 @@ To read more on Pip: https://packaging.python.org/tutorials/installing-packages/
 Get the sourcode
 ```
 # clone directory
-git clone https://github.com/grahamdelafield/HuesCluesDupe
+git clone https://github.com/grahamdelafield/HuesCuesDupe
 ```
 
 Navigate to directory and instal packages
 ```
-# navigate to /users/some_path/HuesCluesDupe
+# navigate to /users/some_path/HuesCuesDupe
 pip install -r requirements.txt
 ```
 
