@@ -1,0 +1,5 @@
+matplotlib==3.2.1
+numpy==1.18.2
+pyface==7.2.0
+pandas==1.0.3
+PyQt5==5.15.2
