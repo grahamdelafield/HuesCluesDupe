@@ -1,3 +1,6 @@
+![Banner](https://github.com/grahamdelafield/HuesCluesDupe/colorwheel.png)
+
+
 # HuesCluesDupe
 
 This code emulates a simple version of the board game Hues and Cues (https://boardgamegeek.com/boardgame/302520/hues-and-cues). This is done purely for exercise; I own no intellectual property or rights to the board game.
