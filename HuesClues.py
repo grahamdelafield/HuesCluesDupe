@@ -39,7 +39,7 @@ class LoadWindow(QWidget):
 
         self.button1 = QPushButton('Player 1')
         self.button1.setFont(QFont('Times', 14))
-        self.p1text = QLineEdit('Graham')
+        self.p1text = QLineEdit('Enter Name')
         self.p1text.setFont(QFont('Times', 14))
         self.button1.setCheckable(True)
         self.button1.clicked.connect(self.switch_player)
@@ -47,21 +47,21 @@ class LoadWindow(QWidget):
         self.button2 = QPushButton('Player 2')        
         self.button2.setFont(QFont('Times', 14))
         self.button2.clicked.connect(self.switch_player)
-        self.p2text = QLineEdit('Cooper')
+        self.p2text = QLineEdit('Enter Name')
         self.p2text.setFont(QFont('Times', 14))
         self.button2.setCheckable(True)
 
         self.button3 = QPushButton('Player 3')
         self.button3.setFont(QFont('Times', 14))
         self.button3.clicked.connect(self.switch_player)
-        self.p3text = QLineEdit('Mary')
+        self.p3text = QLineEdit('Enter Name')
         self.p3text.setFont(QFont('Times', 14))
         self.button3.setCheckable(True)
         
         self.button4 = QPushButton('Player 4')
         self.button4.setFont(QFont('Times', 14))
         self.button4.clicked.connect(self.switch_player)
-        self.p4text = QLineEdit('Fred')
+        self.p4text = QLineEdit('Enter Name')
         self.p4text.setFont(QFont('Times', 14))
         self.button4.setCheckable(True)
         self.last_selected = None
