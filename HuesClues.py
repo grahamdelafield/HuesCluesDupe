@@ -78,7 +78,7 @@ class LoadWindow(QWidget):
         self.scores = {}
         self.turn_log = {}
         self.turn_color = None
-        self.colorcanvas.mousePressEvent = self.paint
+        self.colorcanvas.mousePressEvent = self.btnPass
 
         self.comm = QLabel()
         self.comm.setText('It works')
@@ -264,9 +264,10 @@ class LoadWindow(QWidget):
     def restart(self):
         self.scores = {}
         colorwheel = QPixmap(r"C:\Users\graha\Desktop\Code\Python\hues_clues\colorwheel.png")
-        colorwheel = colorwheel.scaled(1000, 750, QtCore.Qt.KeepAspectRatio)
+        colorwheel = colorwheel.scaled(self.color_dim, self.color_dim, QtCore.Qt.KeepAspectRatio)
         self.colorcanvas.setAlignment(QtCore.Qt.AlignHCenter)
         self.colorcanvas.setPixmap(colorwheel)
+        self.player_reset()
 
         score = QPixmap(r"C:\Users\graha\Desktop\Code\Python\hues_clues\PlaceHolder.png")
         score = score.scaled(750, 750, QtCore.Qt.KeepAspectRatio)
@@ -316,7 +317,7 @@ class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         self.window = LoadWindow()
-        self.setWindowTitle("Poops and Dupes")
+        self.setWindowTitle("Hues & Clues Dupe")
         self.setCentralWidget(self.window)
         self.setGeometry(50, 100, 300, 150)
         self.show()
