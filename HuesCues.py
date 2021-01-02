@@ -274,6 +274,8 @@ class LoadWindow(QWidget):
         self.scorecanvas.setAlignment(QtCore.Qt.AlignVCenter)
         self.scorecanvas.setPixmap(score)
         self.pull_color()
+        self.answer_btn.setDisabled(False)
+        self.start_btn.setDisabled(True)
 
     def get_score(self):
         players = list(self.scores.keys())
