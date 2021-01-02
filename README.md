@@ -1,4 +1,4 @@
-![Banner](https://github.com/grahamdelafield/HuesCluesDupe/colorwheel.png)
+![Banner](https://github.com/grahamdelafield/HuesCluesDupe/blob/master/colorwheel.png)
 
 
 # HuesCluesDupe
