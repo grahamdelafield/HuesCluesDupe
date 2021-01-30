@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import *
+from matplotlib import ticker
 import pandas as pd
 import numpy as np 
 import matplotlib.pyplot as plt
@@ -21,7 +22,7 @@ class LoadWindow(QWidget):
         super(LoadWindow, self).__init__(parent)
 
         self.colorcanvas = QLabel()
-        self.color_dim = 1000
+        self.color_dim = 500
         colorwheel = QPixmap(r"colorwheel.png")
         colorwheel = colorwheel.scaled(self.color_dim, self.color_dim, QtCore.Qt.KeepAspectRatio)
         self.colorcanvas.setAlignment(QtCore.Qt.AlignHCenter)
@@ -29,7 +30,8 @@ class LoadWindow(QWidget):
 
         self.scorecanvas = QLabel()
         score = QPixmap(r"PlaceHolder.png")
-        score = score.scaled(750, 750, QtCore.Qt.KeepAspectRatio)
+        self.score_dim = 425
+        score = score.scaled(self.score_dim, self.score_dim, QtCore.Qt.KeepAspectRatio)
         self.scorecanvas.setAlignment(QtCore.Qt.AlignVCenter)
         self.scorecanvas.setPixmap(score)
         
@@ -258,11 +260,11 @@ class LoadWindow(QWidget):
             else:
                 self.scores[player] = self.scores.get(player, 0) + 1
         self.scores = dict(sorted(self.scores.items(), key=lambda x: x[1], reverse=True))
-        print(self.scores)
         self.get_score()
 
     def restart(self):
         self.scores = {}
+        self.turn_log = {}
         colorwheel = QPixmap(r"colorwheel.png")
         colorwheel = colorwheel.scaled(self.color_dim, self.color_dim, QtCore.Qt.KeepAspectRatio)
         self.colorcanvas.setAlignment(QtCore.Qt.AlignHCenter)
@@ -270,7 +272,7 @@ class LoadWindow(QWidget):
         self.player_reset()
 
         score = QPixmap(r"PlaceHolder.png")
-        score = score.scaled(750, 750, QtCore.Qt.KeepAspectRatio)
+        score = score.scaled(self.score_dim, self.score_dim, QtCore.Qt.KeepAspectRatio)
         self.scorecanvas.setAlignment(QtCore.Qt.AlignVCenter)
         self.scorecanvas.setPixmap(score)
         self.pull_color()
@@ -278,16 +280,27 @@ class LoadWindow(QWidget):
         self.start_btn.setDisabled(True)
 
     def get_score(self):
+        print('Scores', self.scores)
+        print('Turn', self.turn_log)
         players = list(self.scores.keys())
         vals = list(self.scores.values())
+        print(players, vals)
         colors = ['#4680c7' if s <= 9 else '#d12c2c' for s in vals]
-        plt.barh(players, vals, color=colors)
-        plt.yticks(fontsize=20)
-        plt.xticks(fontsize=20)
-        plt.vlines(10, -1, 5, linestyle='--', color='k')
-        plt.ylim(-0.5, len(players)-0.5)
+        fig, ax = plt.subplots(1,1)
+        ax.barh(players, vals, color=colors)
+        ax.set_facecolor('#FFFFFF')
+        ax.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
+        # ax.set_yticks(fontsize=20)
+        # ax.set_xticks(fontsize=20)
+        ax.tick_params(labelsize=20)
+        ax.vlines(10, -1, 5, linestyle='--', color='k')
+        ax.set_ylim(-0.5, len(players)-0.5)
+        print('AM DRAWING')
         plt.savefig('Scores.png', bbox_inches='tight', dpi=125)
-        self.scorecanvas.setPixmap(QPixmap('Scores.png'))
+        score = QPixmap('Scores.png')
+        score = score.scaled(self.score_dim, self.score_dim, QtCore.Qt.KeepAspectRatio)
+        self.scorecanvas.setAlignment(QtCore.Qt.AlignVCenter)
+        self.scorecanvas.setPixmap(score)
 
     def show_answer(self):
         l = self.hex_coords(self.turn_color)
@@ -343,5 +356,7 @@ if __name__ == '__main__':
     app = QApplication.instance()
     if app is None:
         app = QApplication([])
+        screen = app.primaryScreen()
+        size = screen.size()
     w = MainWindow()
     sys.exit(app.exec_())
